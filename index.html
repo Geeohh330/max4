@@ -2,133 +2,185 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Welcome to Max4.lol</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-    body {
-        margin: 0;
-        height: 100vh;
-        background: radial-gradient(circle at top, #1b1b1b, #000);
-        color: #d0b3ff; /* default purple text */
-        font-family: Arial, Helvetica, sans-serif;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        transition: all 0.3s ease;
-    }
+:root {
+    --bg1: #1b1b1b;
+    --bg2: #000;
+    --accent: #00ff9c;
+    --accent-soft: rgba(0,255,156,0.15);
+}
 
-    .card {
-        position: relative;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 20px;
-        padding: 45px 40px 40px;
-        max-width: 500px;
-        box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
-        animation: fadeIn 1.2s ease;
-        transition: all 0.3s ease;
-    }
+/* THEMES */
+body.purple {
+    --bg1: #1a1028;
+    --bg2: #090012;
+    --accent: #b266ff;
+    --accent-soft: rgba(178,102,255,0.15);
+}
 
-    .version {
-        position: absolute;
-        top: 15px;
-        right: 18px;
-        background: rgba(128, 0, 128, 0.15);
-        border: 1px solid rgba(128, 0, 128, 0.4);
-        color: #b19cd9;
-        padding: 6px 12px;
-        border-radius: 999px;
-        font-size: 0.85rem;
-        font-weight: bold;
-        letter-spacing: 0.5px;
-        transition: all 0.3s ease;
-    }
+body.blue {
+    --bg1: #0d1a2b;
+    --bg2: #040b18;
+    --accent: #4da6ff;
+    --accent-soft: rgba(77,166,255,0.15);
+}
 
-    h1 { font-size: 2.5rem; margin-bottom: 10px; color: #b19cd9; transition: all 0.3s ease; }
-    p { font-size: 1.1rem; opacity: 0.9; margin-bottom: 25px; color: #d0b3ff; transition: all 0.3s ease; }
-    .footer { margin-top: 25px; font-size: 0.85rem; opacity: 0.6; color: #d0b3ff; transition: all 0.3s ease; }
+body.green {
+    --bg1: #10281a;
+    --bg2: #001208;
+    --accent: #3cff8f;
+    --accent-soft: rgba(60,255,143,0.15);
+}
 
-    .buttons {
-        display: flex;
-        flex-direction: column; /* stack buttons vertically */
-        align-items: center;
-    }
+body.orange {
+    --bg1: #2b180d;
+    --bg2: #120800;
+    --accent: #ff9f43;
+    --accent-soft: rgba(255,159,67,0.15);
+}
 
-    .main-buttons {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 10px;
-    }
+body.red {
+    --bg1: #2b0d0d;
+    --bg2: #120000;
+    --accent: #ff4d4d;
+    --accent-soft: rgba(255,77,77,0.15);
+}
 
-    .buttons a {
-        display: inline-block;
-        margin: 8px 0;
-        padding: 12px 22px;
-        border-radius: 12px;
-        background: #800080; /* default purple */
-        color: #fff;
-        text-decoration: none;
-        font-weight: bold;
-        transition: all 0.3s ease;
-    }
+body.dark {
+    --bg1: #1b1b1b;
+    --bg2: #000;
+    --accent: #9e9e9e;
+    --accent-soft: rgba(158,158,158,0.15);
+}
 
-    .buttons a:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(128, 0, 128, 0.4);
-    }
+/* BASE */
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at top, var(--bg1), var(--bg2));
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
 
-    /* Themes */
-    body.green-theme {
-        color: #00ff9c;
-    }
-    body.green-theme h1 { color: #00ff9c; }
-    body.green-theme p, body.green-theme .footer { color: #00ff9c; }
-    body.green-theme .version { background: rgba(0,255,156,0.15); border: 1px solid rgba(0,255,156,0.4); color: #00ff9c; }
-    body.green-theme .buttons a { background: #00ff9c; color: black; }
-    body.green-theme .buttons a:hover { box-shadow: 0 8px 20px rgba(0,255,156,0.4); }
+.card {
+    position: relative;
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    padding: 45px 40px 40px;
+    max-width: 540px;
+    box-shadow: 0 0 40px rgba(0,0,0,0.6);
+}
 
-    body.orange-theme {
-        color: #ffa500;
-    }
-    body.orange-theme h1 { color: #ffa500; }
-    body.orange-theme p, body.orange-theme .footer { color: #ffa500; }
-    body.orange-theme .version { background: rgba(255,165,0,0.15); border: 1px solid rgba(255,165,0,0.4); color: #ffa500; }
-    body.orange-theme .buttons a { background: #ffa500; color: black; }
-    body.orange-theme .buttons a:hover { box-shadow: 0 8px 20px rgba(255,165,0,0.4); }
+.version {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
 
-    body.blue-theme {
-        color: #1e90ff;
-    }
-    body.blue-theme h1 { color: #1e90ff; }
-    body.blue-theme p, body.blue-theme .footer { color: #1e90ff; }
-    body.blue-theme .version { background: rgba(30,144,255,0.15); border: 1px solid rgba(30,144,255,0.4); color: #1e90ff; }
-    body.blue-theme .buttons a { background: #1e90ff; color: white; }
-    body.blue-theme .buttons a:hover { box-shadow: 0 8px 20px rgba(30,144,255,0.4); }
+.outdated {
+    display: none;
+    background: rgba(255,60,60,0.15);
+    border: 1px solid rgba(255,60,60,0.5);
+    color: #ff5c5c;
+    padding: 14px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+    font-weight: bold;
+    animation: pulse 1.5s infinite;
+}
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(15px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+h1 {
+    color: var(--accent);
+    margin-bottom: 10px;
+}
+
+p {
+    opacity: 0.9;
+    margin-bottom: 25px;
+}
+
+/* THEME BUTTONS */
+.themeBar {
+    margin-bottom: 18px;
+}
+
+.themeBar button {
+    margin: 3px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--accent);
+    background: none;
+    color: var(--accent);
+    cursor: pointer;
+    font-size: 0.75rem;
+}
+
+.buttons a {
+    display: inline-block;
+    margin: 8px;
+    padding: 12px 22px;
+    border-radius: 12px;
+    background: var(--accent);
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer {
+    margin-top: 25px;
+    font-size: 0.85rem;
+    opacity: 0.6;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 rgba(255,60,60,0); }
+    50% { box-shadow: 0 0 20px rgba(255,60,60,0.35); }
+    100% { box-shadow: 0 0 0 rgba(255,60,60,0); }
+}
 </style>
 </head>
-<body>
 
+<body>
 <div class="card">
-    <div class="version">newest version 1.5</div>
+    <div class="version" id="versionBadge">v?</div>
+
+    <div class="outdated" id="outdatedWarning">
+        ⚠️ OUTDATED CLIENT<br>
+        Please update to continue
+    </div>
+
+    <div class="themeBar">
+        <button onclick="setTheme('purple')">Purple</button>
+        <button onclick="setTheme('blue')">Blue</button>
+        <button onclick="setTheme('green')">Green</button>
+        <button onclick="setTheme('orange')">Orange</button>
+        <button onclick="setTheme('red')">Red</button>
+        <button onclick="setTheme('dark')">Dark</button>
+    </div>
 
     <h1>Welcome to Max4.lol</h1>
     <p>
         The best Gorilla Tag copy client.<br>
-        Fast. Clean. Built for you.
+        Fast. Clean. Built for movement.
     </p>
 
     <div class="buttons">
-        <div class="main-buttons">
-            <a href="https://discord.gg/RDpt5rtHPM" target="_blank">Join Discord</a>
-            <a href="https://www.youtube.com/@Geeohh330" target="_blank">My Youtube</a>
-        </div>
-        <a href="#" id="themeBtn">Change Theme</a>
+        <a href="https://discord.gg/F7EXMGZ93w" target="_blank">Join Discord</a>
+        <a href="https://www.youtube.com/@Geeohh330" target="_blank">YouTube</a>
     </div>
 
     <div class="footer">
@@ -137,18 +189,36 @@
 </div>
 
 <script>
-    const themeBtn = document.getElementById('themeBtn');
-    const themes = ['purple', 'green', 'orange', 'blue'];
-    let current = 0;
+/* LOAD SAVED THEME */
+const savedTheme = localStorage.getItem("theme") || "purple";
+document.body.className = savedTheme;
 
-    themeBtn.addEventListener('click', () => {
-        document.body.classList.remove('green-theme', 'orange-theme', 'blue-theme');
-        current = (current + 1) % themes.length;
-        const theme = themes[current];
-        if(theme !== 'purple') document.body.classList.add(`${theme}-theme`);
+/* SET THEME */
+function setTheme(theme) {
+    document.body.className = theme;
+    localStorage.setItem("theme", theme);
+}
+
+/* VERSION CHECK */
+const params = new URLSearchParams(window.location.search);
+const clientVersion = params.get("v") || "unknown";
+
+const versionBadge = document.getElementById("versionBadge");
+const warning = document.getElementById("outdatedWarning");
+const updateBtn = document.getElementById("updateBtn");
+
+versionBadge.textContent = "v" + clientVersion;
+
+fetch("version.json")
+    .then(r => r.json())
+    .then(data => {
+        updateBtn.href = data.updateUrl;
+
+        if (clientVersion !== data.latest) {
+            warning.style.display = "block";
+            versionBadge.textContent += " (outdated)";
+        }
     });
 </script>
-
 </body>
 </html>
-
