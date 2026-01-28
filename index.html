@@ -2,223 +2,150 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Welcome to Max4.lol</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Max4 Client</title>
 
 <style>
 :root {
-    --bg1: #1b1b1b;
-    --bg2: #000;
-    --accent: #00ff9c;
-    --accent-soft: rgba(0,255,156,0.15);
+    --bg: #2a004f;
+    --accent: #a855f7;
+    --text: #ffffff;
 }
 
-/* THEMES */
-body.purple {
-    --bg1: #1a1028;
-    --bg2: #090012;
-    --accent: #b266ff;
-    --accent-soft: rgba(178,102,255,0.15);
-}
-
-body.blue {
-    --bg1: #0d1a2b;
-    --bg2: #040b18;
-    --accent: #4da6ff;
-    --accent-soft: rgba(77,166,255,0.15);
-}
-
-body.green {
-    --bg1: #10281a;
-    --bg2: #001208;
-    --accent: #3cff8f;
-    --accent-soft: rgba(60,255,143,0.15);
-}
-
-body.orange {
-    --bg1: #2b180d;
-    --bg2: #120800;
-    --accent: #ff9f43;
-    --accent-soft: rgba(255,159,67,0.15);
-}
-
-body.red {
-    --bg1: #2b0d0d;
-    --bg2: #120000;
-    --accent: #ff4d4d;
-    --accent-soft: rgba(255,77,77,0.15);
-}
-
-body.dark {
-    --bg1: #1b1b1b;
-    --bg2: #000;
-    --accent: #9e9e9e;
-    --accent-soft: rgba(158,158,158,0.15);
-}
-
-/* BASE */
 body {
     margin: 0;
-    height: 100vh;
-    background: radial-gradient(circle at top, var(--bg1), var(--bg2));
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
+    height: 100vh;
 }
 
-.card {
-    position: relative;
-    background: rgba(255,255,255,0.05);
-    border-radius: 20px;
-    padding: 45px 40px 40px;
-    max-width: 540px;
-    box-shadow: 0 0 40px rgba(0,0,0,0.6);
-}
-
-.version {
-    position: absolute;
-    top: 15px;
-    right: 18px;
-    background: var(--accent-soft);
-    border: 1px solid var(--accent);
-    color: var(--accent);
-    padding: 6px 12px;
-    border-radius: 999px;
-    font-size: 0.85rem;
-    font-weight: bold;
-}
-
-.outdated {
-    display: none;
-    background: rgba(255,60,60,0.15);
-    border: 1px solid rgba(255,60,60,0.5);
-    color: #ff5c5c;
-    padding: 14px;
+.container {
+    background: rgba(0,0,0,0.4);
+    padding: 25px;
     border-radius: 12px;
-    margin-bottom: 18px;
-    font-weight: bold;
-    animation: pulse 1.5s infinite;
+    width: 380px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(168,85,247,0.6);
 }
 
 h1 {
-    color: var(--accent);
-    margin-bottom: 10px;
+    margin-top: 0;
 }
 
-p {
-    opacity: 0.9;
-    margin-bottom: 25px;
+#versionText {
+    opacity: 0.7;
 }
 
-/* THEME BUTTONS */
-.themeBar {
-    margin-bottom: 18px;
-}
-
-.themeBar button {
-    margin: 3px;
-    padding: 6px 10px;
-    border-radius: 999px;
-    border: 1px solid var(--accent);
-    background: none;
-    color: var(--accent);
-    cursor: pointer;
-    font-size: 0.75rem;
-}
-
-.buttons a {
-    display: inline-block;
-    margin: 8px;
-    padding: 12px 22px;
-    border-radius: 12px;
-    background: var(--accent);
-    color: black;
-    text-decoration: none;
+.warning {
+    margin-top: 15px;
+    padding: 10px;
+    background: #ff3333;
+    border-radius: 8px;
     font-weight: bold;
+    display: none;
+    white-space: pre-line;
 }
 
-.footer {
-    margin-top: 25px;
-    font-size: 0.85rem;
-    opacity: 0.6;
+select, button {
+    margin-top: 15px;
+    padding: 10px;
+    width: 100%;
+    border-radius: 6px;
+    border: none;
+    font-size: 16px;
 }
 
-@keyframes pulse {
-    0% { box-shadow: 0 0 0 rgba(255,60,60,0); }
-    50% { box-shadow: 0 0 20px rgba(255,60,60,0.35); }
-    100% { box-shadow: 0 0 0 rgba(255,60,60,0); }
+button {
+    background: var(--accent);
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.85;
 }
 </style>
 </head>
 
 <body>
-<div class="card">
-    <div class="version" id="versionBadge">v?</div>
+<div class="container">
+    <h1>Welcome To Max4.lol</h1>
+    <p>The Best Gorilla Tag Copy Client</p>
 
-    <div class="outdated" id="outdatedWarning">
-        ⚠️ OUTDATED CLIENT<br>
-        Please update to continue
+    <p id="versionText">vunknown</p>
+
+    <div id="outdatedWarning" class="warning">
+        ⚠ OUTDATED CLIENT
     </div>
 
-    <div class="themeBar">
-        <button onclick="setTheme('purple')">Purple</button>
-        <button onclick="setTheme('blue')">Blue</button>
-        <button onclick="setTheme('green')">Green</button>
-        <button onclick="setTheme('orange')">Orange</button>
-        <button onclick="setTheme('red')">Red</button>
-        <button onclick="setTheme('dark')">Dark</button>
-    </div>
+    <select id="themeSelect">
+        <option value="purple">Purple</option>
+        <option value="blue">Blue</option>
+        <option value="green">Green</option>
+        <option value="orange">Orange</option>
+        <option value="red">Red</option>
+        <option value="dark">Dark</option>
+    </select>
 
-    <h1>Welcome to Max4.lol</h1>
-    <p>
-        The best Gorilla Tag copy client.<br>
-        Fast. Clean. Built for movement.
-    </p>
-
-    <div class="buttons">
-        <a href="https://discord.gg/F7EXMGZ93w" target="_blank">Join Discord</a>
-        <a href="https://www.youtube.com/@Geeohh330" target="_blank">YouTube</a>
-    </div>
-
-    <div class="footer">
-        Not affiliated with Gorilla Tag or Another Axiom
-    </div>
+    <button onclick="openDiscord()">Join Discord</button>
 </div>
 
 <script>
-/* LOAD SAVED THEME */
-const savedTheme = localStorage.getItem("theme") || "purple";
-document.body.className = savedTheme;
+/* 🔴 CHANGE THIS WHEN YOU UPDATE */
+const LATEST_VERSION = "1.5";
 
-/* SET THEME */
-function setTheme(theme) {
-    document.body.className = theme;
-    localStorage.setItem("theme", theme);
-}
-
-/* VERSION CHECK */
+/* GET VERSION FROM URL */
 const params = new URLSearchParams(window.location.search);
 const clientVersion = params.get("v") || "unknown";
 
-const versionBadge = document.getElementById("versionBadge");
-const warning = document.getElementById("outdatedWarning");
-const updateBtn = document.getElementById("updateBtn");
+const versionText = document.getElementById("versionText");
+const warningBox = document.getElementById("outdatedWarning");
 
-versionBadge.textContent = "v" + clientVersion;
+/* SHOW VERSION */
+versionText.textContent = `v${clientVersion}`;
 
-fetch("version.json")
-    .then(r => r.json())
-    .then(data => {
-        updateBtn.href = data.updateUrl;
+/* VERSION CHECK */
+if (clientVersion === "unknown") {
+    warningBox.style.display = "block";
+    warningBox.textContent = "Opened outside the game";
+}
+else if (clientVersion !== LATEST_VERSION) {
+    warningBox.style.display = "block";
+    warningBox.textContent =
+        `⚠ OUTDATED CLIENT\nYour version: v${clientVersion}\nLatest version: v${LATEST_VERSION}`;
+}
 
-        if (clientVersion !== data.latest) {
-            warning.style.display = "block";
-            versionBadge.textContent += " (outdated)";
-        }
-    });
+/* THEMES */
+const themes = {
+    purple: ["#2a004f", "#a855f7"],
+    blue: ["#001f3f", "#3b82f6"],
+    green: ["#002f1f", "#22c55e"],
+    orange: ["#3a1f00", "#f97316"],
+    red: ["#3a0000", "#ef4444"],
+    dark: ["#0f0f0f", "#555"]
+};
+
+const themeSelect = document.getElementById("themeSelect");
+const savedTheme = localStorage.getItem("theme") || "purple";
+themeSelect.value = savedTheme;
+applyTheme(savedTheme);
+
+themeSelect.addEventListener("change", () => {
+    localStorage.setItem("theme", themeSelect.value);
+    applyTheme(themeSelect.value);
+});
+
+function applyTheme(theme) {
+    document.documentElement.style.setProperty("--bg", themes[theme][0]);
+    document.documentElement.style.setProperty("--accent", themes[theme][1]);
+}
+
+function openDiscord() {
+    window.open("https://discord.gg/F7EXMGZ93w", "_blank");
+}
 </script>
 </body>
 </html>
