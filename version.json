@@ -1,5 +1,6 @@
 {
   "latest": "1.5",
-  "required": false,
+  "required": true,
   "updateUrl": "https://discord.gg/RDpt5rtHPM"
 }
+
