@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Max4</title>
+<title>Welcome to Max4.lol</title>
 
 <style>
 body {
@@ -19,12 +19,12 @@ body {
 
 .card {
     position: relative;
-    background: rgba(255,255,255,0.05);
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 20px;
-    padding: 40px;
+    padding: 45px 40px 40px;
     max-width: 500px;
     text-align: center;
-    box-shadow: 0 0 40px rgba(128,0,128,0.5);
+    box-shadow: 0 0 40px rgba(128, 0, 128, 0.5);
 }
 
 .version {
@@ -39,7 +39,7 @@ body {
 
 .latest {
     background: rgba(0,255,120,0.15);
-    border: 1px solid rgba(0,255,120,0.4);
+    border: 1px solid rgba(0,255,120,0.45);
     color: #00ff78;
 }
 
@@ -54,6 +54,12 @@ h1 {
     color: #b19cd9;
 }
 
+p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 25px;
+}
+
 .buttons a {
     display: inline-block;
     margin: 10px;
@@ -63,6 +69,11 @@ h1 {
     color: white;
     text-decoration: none;
     font-weight: bold;
+}
+
+.buttons a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(128,0,128,0.4);
 }
 
 /* FORCE UPDATE OVERLAY */
@@ -83,15 +94,21 @@ h1 {
     padding: 30px;
     max-width: 420px;
     text-align: center;
+    box-shadow: 0 0 35px rgba(255, 80, 80, 0.5);
 }
 
 .updateBox h2 {
     color: #ff5555;
+    margin-bottom: 10px;
+}
+
+.updateBox p {
+    margin-bottom: 20px;
+    opacity: 0.9;
 }
 
 .updateBox a {
     display: inline-block;
-    margin-top: 20px;
     padding: 12px 22px;
     border-radius: 10px;
     background: #ff5555;
@@ -103,27 +120,38 @@ h1 {
 </head>
 <body>
 
+<!-- ⚠️ FORCE UPDATE POPUP -->
 <div id="forceUpdate">
     <div class="updateBox">
         <h2>⚠️ Update Required</h2>
-        <p>This version of Max4 is no longer supported.</p>
-        <a id="updateLink" href="#">Update Now</a>
+        <p>This version of Max4 is outdated.<br>Please update to continue.</p>
+        <a id="updateLink" href="#" target="_blank">Get Latest Version</a>
     </div>
 </div>
 
 <div class="card">
     <div id="versionBadge" class="version">Checking version…</div>
 
-    <h1>Max4.lol</h1>
-    <p>the best Gorilla Tag copy client</p>
+    <h1>Welcome to Max4.lol</h1>
+    <p>The best Gorilla Tag copy client.<br>Fast. Clean. Built your experience.</p>
 
     <div class="buttons">
         <a href="https://discord.gg/RDpt5rtHPM" target="_blank">Discord</a>
+        <a href="https://www.youtube.com/@Geeohh330" target="_blank">YouTube</a>
+        
     </div>
 </div>
 
 <script>
-const CURRENT_VERSION = "1.5"; // 🔴 CHANGE THIS WHEN YOU UPDATE
+/* ===== DEFAULT VERSION ===== */
+const DEFAULT_VERSION = "1.5";
+
+/* ===== READ ?v= FROM URL ===== */
+const params = new URLSearchParams(window.location.search);
+const URL_VERSION = params.get("v");
+
+/* Use URL version if present, otherwise default */
+const CURRENT_VERSION = URL_VERSION || DEFAULT_VERSION;
 
 fetch("version.json")
     .then(res => res.json())
@@ -145,10 +173,14 @@ fetch("version.json")
                 overlay.style.display = "flex";
             }
         }
+
+        console.log("Using version:", CURRENT_VERSION);
+        console.log("Latest version:", data.latest);
     })
-    .catch(() => {
+    .catch(err => {
         document.getElementById("versionBadge").innerText =
             "⚠️ Version check failed";
+        console.error(err);
     });
 </script>
 
