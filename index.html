@@ -18,6 +18,7 @@ body {
     text-align: center;
 }
 
+/* MAIN CARD */
 .card {
     position: relative;
     background: rgba(255, 255, 255, 0.05);
@@ -28,7 +29,7 @@ body {
     animation: fadeIn 1.2s ease;
 }
 
-/* Version badge */
+/* VERSION BADGE */
 .version {
     position: absolute;
     top: 15px;
@@ -37,7 +38,6 @@ body {
     border-radius: 999px;
     font-size: 0.85rem;
     font-weight: bold;
-    letter-spacing: 0.4px;
 }
 
 .version.latest {
@@ -54,14 +54,7 @@ body {
 
 h1 {
     font-size: 2.5rem;
-    margin-bottom: 10px;
     color: #b19cd9;
-}
-
-p {
-    font-size: 1.1rem;
-    opacity: 0.9;
-    margin-bottom: 25px;
 }
 
 .buttons a {
@@ -73,12 +66,6 @@ p {
     color: white;
     text-decoration: none;
     font-weight: bold;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.buttons a:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(128, 0, 128, 0.4);
 }
 
 .footer {
@@ -87,33 +74,78 @@ p {
     opacity: 0.6;
 }
 
+/* ⚠️ FORCE UPDATE OVERLAY */
+#updateOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.updateBox {
+    background: #140014;
+    border: 2px solid #ff5555;
+    border-radius: 18px;
+    padding: 35px;
+    max-width: 420px;
+    text-align: center;
+    box-shadow: 0 0 35px rgba(255, 80, 80, 0.5);
+}
+
+.updateBox h2 {
+    color: #ff5555;
+    margin-bottom: 10px;
+}
+
+.updateBox p {
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.updateBox a {
+    display: inline-block;
+    padding: 12px 22px;
+    border-radius: 10px;
+    background: #ff5555;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
 <body>
 
+<!-- ⚠️ FORCE UPDATE POPUP -->
+<div id="updateOverlay">
+    <div class="updateBox">
+        <h2>⚠️ Update Required</h2>
+        <p>
+            Your version of <b>Max4</b> is outdated.<br>
+            Please update to continue.
+        </p>
+        <a href="https://discord.gg/RDpt5rtHPM" target="_blank">
+            Get Latest Version
+        </a>
+    </div>
+</div>
+
 <div class="card">
     <div id="versionBadge" class="version"></div>
 
     <h1>Welcome to Max4.lol</h1>
-    <p>
-        The best Gorilla Tag copy client.<br>
-        Fast. Clean. Built for you.
-    </p>
+    <p>The best Gorilla Tag copy client.</p>
 
     <div class="buttons">
-        <a href="https://discord.gg/RDpt5rtHPM" target="_blank">Join Discord</a>
-        <a href="https://www.youtube.com/@Geeohh330" target="_blank">My YouTube</a>
-        <a href="tutorial.html">Tutorial (beta)</a>
+        <a href="https://discord.gg/RDpt5rtHPM" target="_blank">Discord</a>
+        <a href="https://www.youtube.com/@Geeohh330" target="_blank">YouTube</a>
     </div>
 
     <div class="footer">
@@ -123,11 +155,12 @@ p {
 
 <script>
 /* ===== VERSION SETTINGS ===== */
-const CURRENT_VERSION = "1.5";   // version users are on
-const LATEST_VERSION  = "1.5";   // change when a new update releases
+const CURRENT_VERSION = "1.5";
+const LATEST_VERSION  = "1.5";
 /* ============================ */
 
 const badge = document.getElementById("versionBadge");
+const overlay = document.getElementById("updateOverlay");
 
 if (CURRENT_VERSION === LATEST_VERSION) {
     badge.classList.add("latest");
@@ -135,6 +168,7 @@ if (CURRENT_VERSION === LATEST_VERSION) {
 } else {
     badge.classList.add("update");
     badge.innerText = `⬆ Update available (${CURRENT_VERSION} → ${LATEST_VERSION})`;
+    overlay.style.display = "flex"; // FORCE WARNING
 }
 </script>
 
