@@ -35,18 +35,21 @@ body {
     border-radius: 999px;
     font-size: 0.85rem;
     font-weight: bold;
+    cursor: default; /* only clickable if update */
 }
 
 .latest {
     background: rgba(0,255,120,0.15);
     border: 1px solid rgba(0,255,120,0.45);
     color: #00ff78;
+    cursor: default;
 }
 
 .update {
     background: rgba(255,160,60,0.15);
     border: 1px solid rgba(255,160,60,0.4);
     color: #ffb347;
+    cursor: pointer;
 }
 
 h1 {
@@ -123,9 +126,9 @@ p {
 <!-- ⚠️ FORCE UPDATE POPUP -->
 <div id="forceUpdate">
     <div class="updateBox">
-        <h2>⚠️ Update Required</h2>
+        <h2>Update Required</h2>
         <p>This version of Max4 is outdated.<br>Please update to continue.</p>
-        <a id="updateLink" href="#" target="_blank">Get Latest Version</a>
+        <a id="updateLink" href="#" target="_blank">Join Discord</a>
     </div>
 </div>
 
@@ -133,12 +136,11 @@ p {
     <div id="versionBadge" class="version">Checking version…</div>
 
     <h1>Welcome to Max4.lol</h1>
-    <p>The best Gorilla Tag copy client.<br>Fast. Clean. Built your experience.</p>
+    <p>The best Gorilla Tag copy client.<br>Fast. Clean. Built for you.</p>
 
     <div class="buttons">
         <a href="https://discord.gg/RDpt5rtHPM" target="_blank">Discord</a>
         <a href="https://www.youtube.com/@Geeohh330" target="_blank">YouTube</a>
-        
     </div>
 </div>
 
@@ -159,15 +161,21 @@ fetch("version.json")
         const badge = document.getElementById("versionBadge");
         const overlay = document.getElementById("forceUpdate");
         const updateLink = document.getElementById("updateLink");
+        const discordURL = "https://discord.gg/RDpt5rtHPM";
 
-        updateLink.href = data.updateUrl;
+        updateLink.href = discordURL;
 
         if (CURRENT_VERSION === data.latest) {
             badge.className = "version latest";
             badge.innerText = `✔ Latest version (${CURRENT_VERSION})`;
+            badge.onclick = null; // not clickable
         } else {
             badge.className = "version update";
-            badge.innerText = `⬆ Update available (${CURRENT_VERSION} → ${data.latest})`;
+            badge.innerText = `Update available (${CURRENT_VERSION} → ${data.latest})`;
+            
+            // Make badge clickable to Discord
+            badge.style.cursor = "pointer";
+            badge.onclick = () => { window.open(discordURL, "_blank"); };
 
             if (data.required) {
                 overlay.style.display = "flex";
