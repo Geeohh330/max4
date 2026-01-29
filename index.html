@@ -3,53 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Welcome to Max4.lol</title>
+<title>Max4</title>
 
 <style>
 body {
     margin: 0;
-    height: 100vh;
+    min-height: 100vh;
     background: radial-gradient(circle at top, #1b1b1b, #000);
     color: #e0d0ff;
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
 }
 
-/* MAIN CARD */
 .card {
     position: relative;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255,255,255,0.05);
     border-radius: 20px;
-    padding: 45px 40px 40px;
+    padding: 40px;
     max-width: 500px;
-    box-shadow: 0 0 40px rgba(128, 0, 128, 0.5);
-    animation: fadeIn 1.2s ease;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(128,0,128,0.5);
 }
 
-/* VERSION BADGE */
 .version {
     position: absolute;
     top: 15px;
-    right: 18px;
+    right: 15px;
     padding: 6px 14px;
     border-radius: 999px;
     font-size: 0.85rem;
     font-weight: bold;
 }
 
-.version.latest {
-    background: rgba(0, 255, 120, 0.15);
-    border: 1px solid rgba(0, 255, 120, 0.45);
+.latest {
+    background: rgba(0,255,120,0.15);
+    border: 1px solid rgba(0,255,120,0.4);
     color: #00ff78;
 }
 
-.version.update {
-    background: rgba(255, 80, 80, 0.15);
-    border: 1px solid rgba(255, 80, 80, 0.45);
-    color: #ff5555;
+.update {
+    background: rgba(255,160,60,0.15);
+    border: 1px solid rgba(255,160,60,0.4);
+    color: #ffb347;
 }
 
 h1 {
@@ -59,7 +56,7 @@ h1 {
 
 .buttons a {
     display: inline-block;
-    margin: 8px;
+    margin: 10px;
     padding: 12px 22px;
     border-radius: 12px;
     background: #800080;
@@ -68,14 +65,8 @@ h1 {
     font-weight: bold;
 }
 
-.footer {
-    margin-top: 25px;
-    font-size: 0.85rem;
-    opacity: 0.6;
-}
-
-/* ⚠️ FORCE UPDATE OVERLAY */
-#updateOverlay {
+/* FORCE UPDATE OVERLAY */
+#forceUpdate {
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.85);
@@ -89,24 +80,18 @@ h1 {
     background: #140014;
     border: 2px solid #ff5555;
     border-radius: 18px;
-    padding: 35px;
+    padding: 30px;
     max-width: 420px;
     text-align: center;
-    box-shadow: 0 0 35px rgba(255, 80, 80, 0.5);
 }
 
 .updateBox h2 {
     color: #ff5555;
-    margin-bottom: 10px;
-}
-
-.updateBox p {
-    margin-bottom: 20px;
-    opacity: 0.9;
 }
 
 .updateBox a {
     display: inline-block;
+    margin-top: 20px;
     padding: 12px 22px;
     border-radius: 10px;
     background: #ff5555;
@@ -114,62 +99,57 @@ h1 {
     font-weight: bold;
     text-decoration: none;
 }
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
-}
 </style>
 </head>
 <body>
 
-<!-- ⚠️ FORCE UPDATE POPUP -->
-<div id="updateOverlay">
+<div id="forceUpdate">
     <div class="updateBox">
         <h2>⚠️ Update Required</h2>
-        <p>
-            Your version of <b>Max4</b> is outdated.<br>
-            Please update to continue.
-        </p>
-        <a href="https://discord.gg/RDpt5rtHPM" target="_blank">
-            Get Latest Version
-        </a>
+        <p>This version of Max4 is no longer supported.</p>
+        <a id="updateLink" href="#">Update Now</a>
     </div>
 </div>
 
 <div class="card">
-    <div id="versionBadge" class="version"></div>
+    <div id="versionBadge" class="version">Checking version…</div>
 
-    <h1>Welcome to Max4.lol</h1>
-    <p>The best Gorilla Tag copy client.</p>
+    <h1>Max4.lol</h1>
+    <p>the best Gorilla Tag copy client</p>
 
     <div class="buttons">
         <a href="https://discord.gg/RDpt5rtHPM" target="_blank">Discord</a>
-        <a href="https://www.youtube.com/@Geeohh330" target="_blank">YouTube</a>
-    </div>
-
-    <div class="footer">
-        Not affiliated with Gorilla Tag or Another Axiom
     </div>
 </div>
 
 <script>
-/* ===== VERSION SETTINGS ===== */
-const CURRENT_VERSION = "1.5";
-const LATEST_VERSION  = "1.5";
-/* ============================ */
+const CURRENT_VERSION = "1.5"; // 🔴 CHANGE THIS WHEN YOU UPDATE
 
-const badge = document.getElementById("versionBadge");
-const overlay = document.getElementById("updateOverlay");
+fetch("version.json")
+    .then(res => res.json())
+    .then(data => {
+        const badge = document.getElementById("versionBadge");
+        const overlay = document.getElementById("forceUpdate");
+        const updateLink = document.getElementById("updateLink");
 
-if (CURRENT_VERSION === LATEST_VERSION) {
-    badge.classList.add("latest");
-    badge.innerText = `✔ Latest version (${CURRENT_VERSION})`;
-} else {
-    badge.classList.add("update");
-    badge.innerText = `⬆ Update available (${CURRENT_VERSION} → ${LATEST_VERSION})`;
-    overlay.style.display = "flex"; // FORCE WARNING
-}
+        updateLink.href = data.updateUrl;
+
+        if (CURRENT_VERSION === data.latest) {
+            badge.className = "version latest";
+            badge.innerText = `✔ Latest version (${CURRENT_VERSION})`;
+        } else {
+            badge.className = "version update";
+            badge.innerText = `⬆ Update available (${CURRENT_VERSION} → ${data.latest})`;
+
+            if (data.required) {
+                overlay.style.display = "flex";
+            }
+        }
+    })
+    .catch(() => {
+        document.getElementById("versionBadge").innerText =
+            "⚠️ Version check failed";
+    });
 </script>
 
 </body>
