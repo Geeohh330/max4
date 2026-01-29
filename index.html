@@ -2,185 +2,178 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>Max4.lol</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Max4</title>
 
 <style>
 :root {
-    --accent: #800080;
-    --glow: rgba(128,0,128,0.5);
+  --bg: #0b0b0f;
+  --card: #151515;
+  --accent: #8a00ff;
+  --text: #cbb6ff;
+  --good: #19ff8c;
+  --bad: #ff4d4d;
+}
+
+body.blue {
+  --accent: #3b82f6;
+  --text: #bcd7ff;
+}
+
+body.purple {
+  --accent: #a855f7;
+  --text: #e3c8ff;
 }
 
 body {
-    margin: 0;
-    min-height: 100vh;
-    background: radial-gradient(circle at top, #1b1b1b, #000);
-    color: #e0d0ff;
-    font-family: Arial, Helvetica, sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  margin: 0;
+  background: radial-gradient(circle, #1a0026, var(--bg));
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: var(--text);
 }
 
 .card {
-    position: relative;
-    background: rgba(255,255,255,0.05);
-    border-radius: 20px;
-    padding: 45px 40px;
-    max-width: 500px;
-    text-align: center;
-    box-shadow: 0 0 40px var(--glow);
+  background: linear-gradient(145deg, #111, var(--card));
+  border-radius: 25px;
+  padding: 40px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 0 60px rgba(138,0,255,0.4);
+  position: relative;
+  text-align: center;
 }
 
-.version {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    padding: 6px 14px;
-    border-radius: 999px;
-    font-size: 0.85rem;
-    font-weight: bold;
+.badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-weight: bold;
+  font-size: 14px;
 }
 
-.latest {
-    background: rgba(0,255,120,0.15);
-    border: 1px solid rgba(0,255,120,0.45);
-    color: #00ff78;
+.good {
+  background: rgba(25,255,140,0.15);
+  color: var(--good);
+  border: 1px solid var(--good);
 }
 
-.update {
-    background: rgba(255,160,60,0.15);
-    border: 1px solid rgba(255,160,60,0.4);
-    color: #ffb347;
-    cursor: pointer;
+.bad {
+  background: rgba(255,77,77,0.15);
+  color: var(--bad);
+  border: 1px solid var(--bad);
 }
 
 h1 {
-    font-size: 2.5rem;
-    color: #b19cd9;
+  font-size: 48px;
+  margin-bottom: 10px;
 }
 
 p {
-    margin-bottom: 25px;
+  font-size: 20px;
+  opacity: 0.85;
 }
 
-.buttons a,
+.buttons {
+  margin-top: 30px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 button {
-    display: inline-block;
-    margin: 8px;
-    padding: 12px 22px;
-    border-radius: 12px;
-    background: var(--accent);
-    color: white;
-    border: none;
-    text-decoration: none;
-    font-weight: bold;
-    cursor: pointer;
+  background: var(--accent);
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  color: white;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 0 25px rgba(138,0,255,0.6);
 }
 
-.buttons a:hover,
 button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px var(--glow);
+  transform: scale(1.05);
+  box-shadow: 0 0 40px rgba(138,0,255,0.9);
 }
 
-/* FORCE UPDATE */
-#forceUpdate {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.85);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-}
-
-.updateBox {
-    background: #140014;
-    border: 2px solid #ff5555;
-    border-radius: 18px;
-    padding: 30px;
-    text-align: center;
-}
-
-.updateBox h2 {
-    color: #ff5555;
+.theme-btn {
+  margin-top: 25px;
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
 }
 </style>
 </head>
+
 <body>
-
-<!-- FORCE UPDATE -->
-<div id="forceUpdate">
-    <div class="updateBox">
-        <h2>Update Required</h2>
-        <p>Please update Max4 to continue.</p>
-        <a href="https://discord.gg/RDpt5rtHPM" target="_blank">Join Discord</a>
-    </div>
-</div>
-
 <div class="card">
-    <div id="versionBadge" class="version">Checking version…</div>
+  <div id="badge" class="badge">Checking version…</div>
 
-    <h1>Max4</h1>
-    <p>The best Gorilla Tag copy client.</p>
+  <h1>Welcome to Max4.lol</h1>
+  <p>The best Gorilla Tag copy client.<br>Fast. Clean. Built for you.</p>
 
-    <div class="buttons">
-        <a href="https://discord.gg/RDpt5rtHPM" target="_blank">Discord</a>
-        <a href="https://www.youtube.com/@Geeohh330" target="_blank">YouTube</a>
-    </div>
+  <div class="buttons">
+    <button onclick="openDiscord()">Discord</button>
+    <button onclick="openYouTube()">YouTube</button>
+  </div>
 
-    <button onclick="changeTheme()">Change Theme</button>
+  <button class="theme-btn" onclick="changeTheme()">Change Theme</button>
 </div>
 
 <script>
-/* ===== THEME SYSTEM ===== */
-const themes = [
-    { accent: "#800080", glow: "rgba(128,0,128,0.5)" }, // Purple
-    { accent: "#1e90ff", glow: "rgba(30,144,255,0.5)" }, // Blue
-    { accent: "#ff8c00", glow: "rgba(255,140,0,0.5)" }  // Orange
-];
+const latestVersion = "1.5";
+const forceUpdate = false;
+const updateUrl = "https://geeohh330.github.io/max4/";
 
-let themeIndex = localStorage.getItem("theme") || 0;
-applyTheme(themeIndex);
+const params = new URLSearchParams(window.location.search);
+const userVersion = params.get("v");
 
-function applyTheme(i) {
-    document.documentElement.style.setProperty("--accent", themes[i].accent);
-    document.documentElement.style.setProperty("--glow", themes[i].glow);
-    localStorage.setItem("theme", i);
+const badge = document.getElementById("badge");
+
+if (!userVersion) {
+  badge.textContent = "No version detected";
+  badge.className = "badge bad";
+} else if (userVersion === latestVersion) {
+  badge.textContent = "✔ Latest version (" + latestVersion + ")";
+  badge.className = "badge good";
+} else {
+  badge.textContent = "⚠ Update available (" + latestVersion + ")";
+  badge.className = "badge bad";
+
+  if (forceUpdate) {
+    setTimeout(() => {
+      window.location.href = updateUrl;
+    }, 2000);
+  }
 }
+
+function openDiscord() {
+  window.open("https://discord.gg/YOURINVITE", "_blank");
+}
+
+function openYouTube() {
+  window.open("https://youtube.com/@Geeohh330", "_blank");
+}
+
+const themes = ["", "purple", "blue"];
+let themeIndex = 0;
 
 function changeTheme() {
-    themeIndex = (parseInt(themeIndex) + 1) % themes.length;
-    applyTheme(themeIndex);
+  themeIndex = (themeIndex + 1) % themes.length;
+  document.body.className = themes[themeIndex];
+  localStorage.setItem("theme", themes[themeIndex]);
 }
 
-/* ===== VERSION SYSTEM ===== */
-const DEFAULT_VERSION = "1.5";
-const params = new URLSearchParams(window.location.search);
-const CURRENT_VERSION = params.get("v") || DEFAULT_VERSION;
-
-fetch("version.json")
-    .then(r => r.json())
-    .then(data => {
-        const badge = document.getElementById("versionBadge");
-        const overlay = document.getElementById("forceUpdate");
-
-        if (CURRENT_VERSION === data.latest) {
-            badge.className = "version latest";
-            badge.innerText = `✔ Latest (${CURRENT_VERSION})`;
-        } else {
-            badge.className = "version update";
-            badge.innerText = `⬆ Update (${CURRENT_VERSION} → ${data.latest})`;
-            badge.onclick = () => window.open("https://discord.gg/RDpt5rtHPM", "_blank");
-
-            if (data.required) overlay.style.display = "flex";
-        }
-    })
-    .catch(() => {
-        document.getElementById("versionBadge").innerText = "⚠️ Version check failed";
-    });
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme) document.body.className = savedTheme;
 </script>
-
 </body>
 </html>
