@@ -3,9 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Welcome to Max4.lol</title>
+<title>Max4</title>
 
 <style>
+:root {
+    --accent: #800080;
+    --glow: rgba(128,0,128,0.5);
+}
+
 body {
     margin: 0;
     min-height: 100vh;
@@ -19,12 +24,12 @@ body {
 
 .card {
     position: relative;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255,255,255,0.05);
     border-radius: 20px;
-    padding: 45px 40px 40px;
+    padding: 45px 40px;
     max-width: 500px;
     text-align: center;
-    box-shadow: 0 0 40px rgba(128, 0, 128, 0.5);
+    box-shadow: 0 0 40px var(--glow);
 }
 
 .version {
@@ -35,14 +40,12 @@ body {
     border-radius: 999px;
     font-size: 0.85rem;
     font-weight: bold;
-    cursor: default; /* only clickable if update */
 }
 
 .latest {
     background: rgba(0,255,120,0.15);
     border: 1px solid rgba(0,255,120,0.45);
     color: #00ff78;
-    cursor: default;
 }
 
 .update {
@@ -58,28 +61,30 @@ h1 {
 }
 
 p {
-    font-size: 1.1rem;
-    opacity: 0.9;
     margin-bottom: 25px;
 }
 
-.buttons a {
+.buttons a,
+button {
     display: inline-block;
-    margin: 10px;
+    margin: 8px;
     padding: 12px 22px;
     border-radius: 12px;
-    background: #800080;
+    background: var(--accent);
     color: white;
+    border: none;
     text-decoration: none;
     font-weight: bold;
+    cursor: pointer;
 }
 
-.buttons a:hover {
+.buttons a:hover,
+button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(128,0,128,0.4);
+    box-shadow: 0 8px 20px var(--glow);
 }
 
-/* FORCE UPDATE OVERLAY */
+/* FORCE UPDATE */
 #forceUpdate {
     position: fixed;
     inset: 0;
@@ -95,100 +100,85 @@ p {
     border: 2px solid #ff5555;
     border-radius: 18px;
     padding: 30px;
-    max-width: 420px;
     text-align: center;
-    box-shadow: 0 0 35px rgba(255, 80, 80, 0.5);
 }
 
 .updateBox h2 {
     color: #ff5555;
-    margin-bottom: 10px;
-}
-
-.updateBox p {
-    margin-bottom: 20px;
-    opacity: 0.9;
-}
-
-.updateBox a {
-    display: inline-block;
-    padding: 12px 22px;
-    border-radius: 10px;
-    background: #ff5555;
-    color: white;
-    font-weight: bold;
-    text-decoration: none;
 }
 </style>
 </head>
 <body>
 
-<!-- ⚠️ FORCE UPDATE POPUP -->
+<!-- FORCE UPDATE -->
 <div id="forceUpdate">
     <div class="updateBox">
         <h2>Update Required</h2>
-        <p>This version of Max4 is outdated.<br>Please update to continue.</p>
-        <a id="updateLink" href="#" target="_blank">Join Discord</a>
+        <p>Please update Max4 to continue.</p>
+        <a href="https://discord.gg/RDpt5rtHPM" target="_blank">Join Discord</a>
     </div>
 </div>
 
 <div class="card">
     <div id="versionBadge" class="version">Checking version…</div>
 
-    <h1>Welcome to Max4.lol</h1>
-    <p>The best Gorilla Tag copy client.<br>Fast. Clean. Built for you.</p>
+    <h1>Max4</h1>
+    <p>The best Gorilla Tag copy client.</p>
 
     <div class="buttons">
         <a href="https://discord.gg/RDpt5rtHPM" target="_blank">Discord</a>
         <a href="https://www.youtube.com/@Geeohh330" target="_blank">YouTube</a>
     </div>
+
+    <button onclick="changeTheme()">Change Theme</button>
 </div>
 
 <script>
-/* ===== DEFAULT VERSION ===== */
+/* ===== THEME SYSTEM ===== */
+const themes = [
+    { accent: "#800080", glow: "rgba(128,0,128,0.5)" }, // Purple
+    { accent: "#1e90ff", glow: "rgba(30,144,255,0.5)" }, // Blue
+    { accent: "#ff8c00", glow: "rgba(255,140,0,0.5)" }  // Orange
+];
+
+let themeIndex = localStorage.getItem("theme") || 0;
+applyTheme(themeIndex);
+
+function applyTheme(i) {
+    document.documentElement.style.setProperty("--accent", themes[i].accent);
+    document.documentElement.style.setProperty("--glow", themes[i].glow);
+    localStorage.setItem("theme", i);
+}
+
+function changeTheme() {
+    themeIndex = (parseInt(themeIndex) + 1) % themes.length;
+    applyTheme(themeIndex);
+}
+
+/* ===== VERSION SYSTEM ===== */
 const DEFAULT_VERSION = "1.5";
-
-/* ===== READ ?v= FROM URL ===== */
 const params = new URLSearchParams(window.location.search);
-const URL_VERSION = params.get("v");
-
-/* Use URL version if present, otherwise default */
-const CURRENT_VERSION = URL_VERSION || DEFAULT_VERSION;
+const CURRENT_VERSION = params.get("v") || DEFAULT_VERSION;
 
 fetch("version.json")
-    .then(res => res.json())
+    .then(r => r.json())
     .then(data => {
         const badge = document.getElementById("versionBadge");
         const overlay = document.getElementById("forceUpdate");
-        const updateLink = document.getElementById("updateLink");
-        const discordURL = "https://discord.gg/RDpt5rtHPM";
-
-        updateLink.href = discordURL;
 
         if (CURRENT_VERSION === data.latest) {
             badge.className = "version latest";
-            badge.innerText = `✔ Latest version (${CURRENT_VERSION})`;
-            badge.onclick = null; // not clickable
+            badge.innerText = `✔ Latest (${CURRENT_VERSION})`;
         } else {
             badge.className = "version update";
-            badge.innerText = `Update available (${CURRENT_VERSION} → ${data.latest})`;
-            
-            // Make badge clickable to Discord
-            badge.style.cursor = "pointer";
-            badge.onclick = () => { window.open(discordURL, "_blank"); };
+            badge.innerText = `⬆ Update (${CURRENT_VERSION} → ${data.latest})`;
+            badge.onclick = () => window.open("https://discord.gg/RDpt5rtHPM", "_blank");
 
-            if (data.required) {
-                overlay.style.display = "flex";
-            }
+            if (data.required) overlay.style.display = "flex";
         }
-
-        console.log("Using version:", CURRENT_VERSION);
-        console.log("Latest version:", data.latest);
     })
-    .catch(err => {
-        document.getElementById("versionBadge").innerText =
-            "⚠️ Version check failed";
-        console.error(err);
+    .catch(() => {
+        document.getElementById("versionBadge").innerText = "⚠️ Version check failed";
     });
 </script>
 
