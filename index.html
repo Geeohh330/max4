@@ -2,152 +2,141 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Max4 Client</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome to Max4.lol</title>
 
 <style>
-:root {
-    --bg: #2a004f;
-    --accent: #a855f7;
-    --text: #ffffff;
-}
-
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
+    height: 100vh;
+    background: radial-gradient(circle at top, #1b1b1b, #000);
+    color: #e0d0ff;
+    font-family: Arial, Helvetica, sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    text-align: center;
 }
 
-.container {
-    background: rgba(0,0,0,0.4);
-    padding: 25px;
-    border-radius: 12px;
-    width: 380px;
-    text-align: center;
-    box-shadow: 0 0 30px rgba(168,85,247,0.6);
+.card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 45px 40px 40px;
+    max-width: 500px;
+    box-shadow: 0 0 40px rgba(128, 0, 128, 0.5);
+    animation: fadeIn 1.2s ease;
+}
+
+/* Version badge */
+.version {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    letter-spacing: 0.4px;
+}
+
+.version.latest {
+    background: rgba(0, 255, 120, 0.15);
+    border: 1px solid rgba(0, 255, 120, 0.45);
+    color: #00ff78;
+}
+
+.version.update {
+    background: rgba(255, 80, 80, 0.15);
+    border: 1px solid rgba(255, 80, 80, 0.45);
+    color: #ff5555;
 }
 
 h1 {
-    margin-top: 0;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #b19cd9;
 }
 
-#versionText {
-    opacity: 0.7;
+p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 25px;
 }
 
-.warning {
-    margin-top: 15px;
-    padding: 10px;
-    background: #ff3333;
-    border-radius: 8px;
-    font-weight: bold;
-    display: none;
-    white-space: pre-line;
-}
-
-select, button {
-    margin-top: 15px;
-    padding: 10px;
-    width: 100%;
-    border-radius: 6px;
-    border: none;
-    font-size: 16px;
-}
-
-button {
-    background: var(--accent);
+.buttons a {
+    display: inline-block;
+    margin: 8px;
+    padding: 12px 22px;
+    border-radius: 12px;
+    background: #800080;
     color: white;
-    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-button:hover {
-    opacity: 0.85;
+.buttons a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(128, 0, 128, 0.4);
+}
+
+.footer {
+    margin-top: 25px;
+    font-size: 0.85rem;
+    opacity: 0.6;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 </style>
 </head>
-
 <body>
-<div class="container">
-    <h1>Welcome To Max4.lol</h1>
-    <p>The Best Gorilla Tag Copy Client</p>
-    <p>Join The Discord For Updates</p>
 
-    <p id="versionText">vunknown</p>
+<div class="card">
+    <div id="versionBadge" class="version"></div>
 
-    <div id="outdatedWarning" class="warning">
-        ⚠ OUTDATED CLIENT
+    <h1>Welcome to Max4.lol</h1>
+    <p>
+        The best Gorilla Tag copy client.<br>
+        Fast. Clean. Built for you.
+    </p>
+
+    <div class="buttons">
+        <a href="https://discord.gg/RDpt5rtHPM" target="_blank">Join Discord</a>
+        <a href="https://www.youtube.com/@Geeohh330" target="_blank">My YouTube</a>
+        <a href="tutorial.html">Tutorial (beta)</a>
     </div>
 
-    <select id="themeSelect">
-        <option value="purple">Purple</option>
-        <option value="blue">Blue</option>
-        <option value="green">Green</option>
-        <option value="orange">Orange</option>
-        <option value="red">Red</option>
-        <option value="dark">Dark</option>
-    </select>
-
-    <button onclick="openDiscord()">Join Discord</button>
+    <div class="footer">
+        Not affiliated with Gorilla Tag or Another Axiom
+    </div>
 </div>
 
 <script>
-/* 🔴 CHANGE THIS WHEN YOU UPDATE */
-const LATEST_VERSION = "1.5";
+/* ===== VERSION SETTINGS ===== */
+const CURRENT_VERSION = "1.5";   // version users are on
+const LATEST_VERSION  = "1.5";   // change when a new update releases
+/* ============================ */
 
-/* GET VERSION FROM URL */
-const params = new URLSearchParams(window.location.search);
-const clientVersion = params.get("v") || "unknown";
+const badge = document.getElementById("versionBadge");
 
-const versionText = document.getElementById("versionText");
-const warningBox = document.getElementById("outdatedWarning");
-
-/* SHOW VERSION */
-versionText.textContent = `v${clientVersion}`;
-
-/* VERSION CHECK */
-if (clientVersion === "unknown") {
-    warningBox.style.display = "block";
-    warningBox.textContent = "Opened outside the game";
-}
-else if (clientVersion !== LATEST_VERSION) {
-    warningBox.style.display = "block";
-    warningBox.textContent =
-        `⚠ OUTDATED CLIENT\nYour version: v${clientVersion}\nLatest version: v${LATEST_VERSION}`;
-}
-
-/* THEMES */
-const themes = {
-    purple: ["#2a004f", "#a855f7"],
-    blue: ["#001f3f", "#3b82f6"],
-    green: ["#002f1f", "#22c55e"],
-    orange: ["#3a1f00", "#f97316"],
-    red: ["#3a0000", "#ef4444"],
-    dark: ["#0f0f0f", "#555"]
-};
-
-const themeSelect = document.getElementById("themeSelect");
-const savedTheme = localStorage.getItem("theme") || "purple";
-themeSelect.value = savedTheme;
-applyTheme(savedTheme);
-
-themeSelect.addEventListener("change", () => {
-    localStorage.setItem("theme", themeSelect.value);
-    applyTheme(themeSelect.value);
-});
-
-function applyTheme(theme) {
-    document.documentElement.style.setProperty("--bg", themes[theme][0]);
-    document.documentElement.style.setProperty("--accent", themes[theme][1]);
-}
-
-function openDiscord() {
-    window.open("https://discord.gg/F7EXMGZ93w", "_blank");
+if (CURRENT_VERSION === LATEST_VERSION) {
+    badge.classList.add("latest");
+    badge.innerText = `✔ Latest version (${CURRENT_VERSION})`;
+} else {
+    badge.classList.add("update");
+    badge.innerText = `⬆ Update available (${CURRENT_VERSION} → ${LATEST_VERSION})`;
 }
 </script>
+
 </body>
 </html>
-
